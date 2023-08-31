@@ -20,10 +20,7 @@ function Grid() {
   });
   const [announceText, setAnnounceText] = useState(empty);
   const [gameOver, setGameOver] = useState(false);
-  const [values, setValues] = useState(new Array(9).fill(null));
   const [optionsDlg, setOptionsDlg] = useState(true);
-  const [playerText, setPlayerText] = useState(X);
-  const [computerText, setComputerText] = useState(O);
   const [whoseTurn, setWhoseTurn] = useState(X);
   const [difficulty, setDifficulty] = useState(EDifficulty.hard);
   const [player, setPlayer] = useState(X);
@@ -40,10 +37,6 @@ function Grid() {
 
     setMoves((prev) => prev + 1);
 
-    const newValues = [...values];
-    newValues[Number(id)] = playerText;
-    setValues(newValues);
-
     const newCells = [...prevCells];
     newCells[cell] = player;
     setCells(newCells);
@@ -56,11 +49,11 @@ function Grid() {
     if (winner === empty) {
       setWhoseTurn(computer);
 
-      makeComputerMove(newValues, newCells);
+      makeComputerMove(newCells);
     }
   };
 
-  const makeComputerMove = (prevValues: string[], prevCells: string[]) => {
+  const makeComputerMove = (prevCells: string[]) => {
     if (gameOver) {
       return;
     }
@@ -74,10 +67,6 @@ function Grid() {
     );
 
     setMoves((prev) => prev + 1);
-
-    const newValues = [...prevValues];
-    newValues[cell] = computerText;
-    setValues(newValues);
 
     const newCells = [...prevCells];
     newCells[cell] = computer;
@@ -111,7 +100,7 @@ function Grid() {
 
   const getOptions = () => {
     if (player === O) {
-      setTimeout(() => makeComputerMove(values, cells), 400);
+      setTimeout(() => makeComputerMove(cells), 400);
     }
 
     setOptionsDlg(false);
@@ -120,16 +109,12 @@ function Grid() {
   const makePlayerAsX = () => {
     setPlayer(X);
     setWhoseTurn(X);
-    setPlayerText(X);
-    setComputerText(O);
     setComputer(X);
   };
 
   const makePlayerAsO = () => {
     setPlayer(O);
     setWhoseTurn(X);
-    setPlayerText(O);
-    setComputerText(X);
     setComputer(X);
   };
 
@@ -145,7 +130,7 @@ function Grid() {
 
   return (
     <>
-      <Board cells={cells} values={values} cellClicked={cellClicked} />
+      <Board cells={cells} cellClicked={cellClicked} />
 
       <Score score={score} />
       {announceText && <Announce text={announceText} />}
