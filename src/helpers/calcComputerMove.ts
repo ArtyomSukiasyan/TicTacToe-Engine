@@ -1,13 +1,14 @@
+import { empty, X } from "../constants/texts";
 import { EDifficulty } from "../models/difficulty.enum";
 import getFirstWithTwoInARow from "./getFirstWithTwoInARow";
 import getFreeCellIndices from "./getFreeCellIndices";
 import intRandom from "./intRandom";
 
 export default function calcComputerMove(
-  cells: number[],
+  cells: string[],
   moves: number,
-  computer: number,
-  player: number,
+  computer: string,
+  player: string,
   difficulty: EDifficulty
 ) {
   let cell = -1;
@@ -16,12 +17,16 @@ export default function calcComputerMove(
 
   if (moves >= 3) {
     cell = getFirstWithTwoInARow(computer, cells);
+    console.log({ computer });
+
     if (cell === -1) {
+      console.log({ player });
+
       cell = getFirstWithTwoInARow(player, cells);
     }
 
     if (cell === -1) {
-      if (cells[4] === 0 && difficulty === EDifficulty.hard) {
+      if (cells[4] === empty && difficulty === EDifficulty.hard) {
         cell = 4;
       } else {
         myArr = getFreeCellIndices(cells);
@@ -32,7 +37,7 @@ export default function calcComputerMove(
     if (
       moves === 3 &&
       cells[4] === computer &&
-      player === 1 &&
+      player === X &&
       difficulty === EDifficulty.hard
     ) {
       if (cells[7] === player && (cells[0] === player || cells[2] === player)) {
@@ -60,7 +65,7 @@ export default function calcComputerMove(
     } else if (
       moves === 3 &&
       cells[4] === player &&
-      player === 1 &&
+      player === X &&
       difficulty === EDifficulty.hard
     ) {
       if (cells[2] === player && cells[6] === computer) {
@@ -82,7 +87,7 @@ export default function calcComputerMove(
   } else if (
     moves === 2 &&
     cells[4] === player &&
-    computer === 1 &&
+    computer === X &&
     difficulty === EDifficulty.hard
   ) {
     if (cells[0] === computer) {
@@ -97,7 +102,7 @@ export default function calcComputerMove(
   } else if (moves === 0 && intRandom(1, 10) < 8) {
     cell = corners[intRandom(0, 3)];
   } else {
-    if (cells[4] === 0 && difficulty === EDifficulty.hard) {
+    if (cells[4] === empty && difficulty === EDifficulty.hard) {
       cell = 4;
     } else {
       myArr = getFreeCellIndices(cells);

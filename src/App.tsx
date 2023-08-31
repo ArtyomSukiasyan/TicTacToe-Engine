@@ -13,7 +13,7 @@ import { IScore } from "./models/score";
 
 
 function Grid() {
-  const [cells, setCells] = useState(new Array(9).fill(0));
+  const [cells, setCells] = useState<string[]>(new Array(9).fill(empty));
   const [score, setScore] = useState<IScore>({
     draws: 0,
     player: 0,  
@@ -25,17 +25,17 @@ function Grid() {
   const [optionsDlg, setOptionsDlg] = useState(true);
   const [playerText, setPlayerText] = useState(X);
   const [computerText, setComputerText] = useState(O);
-  const [whoseTurn, setWhoseTurn] = useState(1);
+  const [whoseTurn, setWhoseTurn] = useState(X);
   const [difficulty, setDifficulty] = useState(EDifficulty.hard);
-  const [player, setPlayer] = useState(1);
-  const [computer, setComputer] = useState(3);
-  const [winner, setWinner] = useState(0);
+  const [player, setPlayer] = useState(X);
+  const [computer, setComputer] = useState(O);
+  const [winner, setWinner] = useState(empty);
   const [moves, setMoves] = useState(1);
 
-  const cellClicked = (id: string, prevCells: number[]) => {
+  const cellClicked = (id: string, prevCells: string[]) => {
     const cell = parseInt(id[id.length - 1]);
 
-    if (prevCells[cell] > 0 || whoseTurn !== player || gameOver) {
+    if (prevCells[cell]  || whoseTurn !== player || gameOver) {
       return;
     }
 
@@ -54,14 +54,14 @@ function Grid() {
       setWinner(winner);
     }
 
-    if (winner === 0) {
+    if (winner === empty) {
       setWhoseTurn(computer);
 
       makeComputerMove(newValues, newCells);
     }
   };
 
-  const makeComputerMove = (prevValues: string[], prevCells: number[]) => {
+  const makeComputerMove = (prevValues: string[], prevCells: string[]) => {
     if (gameOver) {
       return;
     }
@@ -89,12 +89,12 @@ function Grid() {
       setWinner(winner);
     }
 
-    if (winner === 0 && !gameOver) {
+    if (winner === empty && !gameOver) {
       setWhoseTurn(player);
     }
   };
 
-  const checkWin = (prevCells: number[]) => {
+  const checkWin = (prevCells: string[]) => {
     const { winner: newWinner, score: newScore } = getWinner(
       prevCells,
       computer,
@@ -111,7 +111,7 @@ function Grid() {
   };
 
   const getOptions = () => {
-    if (player === 3) {
+    if (player === O) {
       setTimeout(() => makeComputerMove(values, cells), 400);
     }
 
@@ -119,22 +119,22 @@ function Grid() {
   };
 
   const makePlayerAsX = () => {
-    setPlayer(1);
-    setWhoseTurn(1);
+    setPlayer(X);
+    setWhoseTurn(X);
     setPlayerText(O);
     setComputerText(X);
-    setComputer(1);
+    setComputer(X);
   };
 
   const makePlayerAsO = () => {
-    setPlayer(3);
-    setWhoseTurn(1);
+    setPlayer(O);
+    setWhoseTurn(X);
     setPlayerText(O);
     setComputerText(X);
-    setComputer(1);
+    setComputer(X);
   };
 
-  const endGame = (who: number) => {
+  const endGame = (who: string) => {
     setGameOver(true);
 
     const text = getAnnounceText(who, player, computer);

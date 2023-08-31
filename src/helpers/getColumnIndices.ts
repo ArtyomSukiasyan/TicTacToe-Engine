@@ -1,4 +1,4 @@
-export default function getColumnIndices(index: number, cells: number[]) {
+export default function getColumnIndices(index: number, cells: string[]) {
   if (index !== 0 && index !== 1 && index !== 2) {
     return [];
   }

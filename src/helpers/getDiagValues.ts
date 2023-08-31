@@ -1,4 +1,4 @@
-export default function getDiagValues(arg: number, cells: number[]) {
+export default function getDiagValues(arg: number, cells: string[]) {
   if (arg !== 1 && arg !== 0) {
     return [];
   }

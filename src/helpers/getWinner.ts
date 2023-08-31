@@ -1,3 +1,4 @@
+import { empty } from "../constants/texts";
 import { IScore } from "../models/score";
 import getColumnIndices from "./getColumnIndices";
 import getColumnValues from "./getColumnValues";
@@ -8,17 +9,17 @@ import getRowIndices from "./getRowIndices";
 import getRowValues from "./getRowValues";
 
 export default function getWinner(
-  cells: number[],
-  computer: number,
-  player: number,
+  cells: string[],
+  computer: string,
+  player: string,
   score: IScore
 ) {
-  let winner = 0;
+  let winner = empty;
 
   for (let i = 0; i <= 2; i++) {
     const row = getRowValues(i, cells);
 
-    if (row[0] > 0 && row[0] === row[1] && row[0] === row[2]) {
+    if (row[0] && row[0] === row[1] && row[0] === row[2]) {
       if (row[0] === computer) {
         score = { ...score, computer: score.computer + 1 };
 
@@ -41,7 +42,7 @@ export default function getWinner(
   for (let i = 0; i <= 2; i++) {
     const col = getColumnValues(i, cells);
 
-    if (col[0] > 0 && col[0] === col[1] && col[0] === col[2]) {
+    if (col[0] && col[0] === col[1] && col[0] === col[2]) {
       if (col[0] === computer) {
         score = { ...score, computer: score.computer + 1 };
 
@@ -65,7 +66,7 @@ export default function getWinner(
   for (let i = 0; i <= 1; i++) {
     const diagonal = getDiagValues(i, cells);
     if (
-      diagonal[0] > 0 &&
+      diagonal[0] &&
       diagonal[0] === diagonal[1] &&
       diagonal[0] === diagonal[2]
     ) {
@@ -92,7 +93,7 @@ export default function getWinner(
 
   const myArr = getFreeCellIndices(cells);
   if (myArr.length === 0) {
-    winner = 10;
+    winner = empty;
     score = { ...score, draws: score.draws + 1 };
 
     return { winner, score };

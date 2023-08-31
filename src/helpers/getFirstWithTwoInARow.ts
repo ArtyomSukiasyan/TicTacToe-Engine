@@ -1,3 +1,4 @@
+import { X } from "../constants/texts";
 import getColumnIndices from "./getColumnIndices";
 import getColumnValues from "./getColumnValues";
 import getDiagIndices from "./getDiagIndices";
@@ -9,8 +10,8 @@ import isInArray from "./isInArray";
 import shuffleArray from "./shuffleArray";
 import sumArray from "./sumArray";
 
-export default function getFirstWithTwoInARow(agent: number, cells: number[]) {
-  let sum = agent * 2;
+export default function getFirstWithTwoInARow(agent: string, cells: string[]) {
+  let sum = agent === X ? 2 : 6;
   const freeCells = shuffleArray(getFreeCellIndices(cells));
 
   for (let i = 0; i < freeCells.length; i++) {

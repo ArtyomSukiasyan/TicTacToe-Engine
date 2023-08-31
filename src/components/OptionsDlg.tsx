@@ -1,9 +1,10 @@
 import { ChangeEventHandler, MouseEventHandler } from "react";
+import { O, X } from "../constants/texts";
 import { EDifficulty } from "../models/difficulty.enum";
 
 interface IOptionsDlg {
   difficulty: EDifficulty;
-  player: number;
+  player: string;
   getOptions: MouseEventHandler<HTMLButtonElement>;
   makePlayerAsX: ChangeEventHandler<HTMLInputElement>;
   makePlayerAsO: ChangeEventHandler<HTMLInputElement>;
@@ -47,7 +48,7 @@ export default function OptionsDlg({
           <input
             type="radio"
             name="player"
-            checked={player === 1}
+            checked={player === X}
             onChange={makePlayerAsX}
           />
           X
@@ -56,7 +57,7 @@ export default function OptionsDlg({
           <input
             type="radio"
             name="player"
-            checked={player === 3}
+            checked={player === O}
             onChange={makePlayerAsO}
           />
           O<br />

@@ -1,9 +1,9 @@
 import { computerWins, draw, youWin } from "../constants/texts";
 
 export default function getAnnounceText(
-  who: number,
-  player: number,
-  computer: number
+  who: string,
+  player: string,
+  computer: string
 ) {
   switch (who) {
     case player:

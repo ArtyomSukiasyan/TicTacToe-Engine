@@ -1,4 +1,4 @@
-export default function getRowValues(index: number, cells: number[]) {
+export default function getRowValues(index: number, cells: string[]) {
   if (index !== 0 && index !== 1 && index !== 2) {
     return [];
   }
