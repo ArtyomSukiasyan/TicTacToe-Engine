@@ -15,7 +15,7 @@ export default function Board({ cells, values, cellClicked }: IBoard) {
             id={idx.toString()}
             onClick={(event: any) => cellClicked(event.target.id, cells)}
             className="fixed"
-          > 
+          >
             {values[idx]}
           </div>
         ))}
