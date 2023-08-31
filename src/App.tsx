@@ -11,12 +11,11 @@ import getWinner from "./helpers/getWinner";
 import { EDifficulty } from "./models/difficulty.enum";
 import { IScore } from "./models/score";
 
-
 function Grid() {
   const [cells, setCells] = useState<string[]>(new Array(9).fill(empty));
   const [score, setScore] = useState<IScore>({
     draws: 0,
-    player: 0,  
+    player: 0,
     computer: 0,
   });
   const [announceText, setAnnounceText] = useState(empty);
@@ -35,7 +34,7 @@ function Grid() {
   const cellClicked = (id: string, prevCells: string[]) => {
     const cell = parseInt(id[id.length - 1]);
 
-    if (prevCells[cell]  || whoseTurn !== player || gameOver) {
+    if (prevCells[cell] || whoseTurn !== player || gameOver) {
       return;
     }
 
@@ -121,8 +120,8 @@ function Grid() {
   const makePlayerAsX = () => {
     setPlayer(X);
     setWhoseTurn(X);
-    setPlayerText(O);
-    setComputerText(X);
+    setPlayerText(X);
+    setComputerText(O);
     setComputer(X);
   };
 
