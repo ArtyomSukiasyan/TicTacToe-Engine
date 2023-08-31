@@ -12,8 +12,10 @@ export default function calcComputerMove(
   difficulty: EDifficulty
 ) {
   let cell = -1;
-  let myArr = [];
+  let candidateCells = [];
   const corners = [0, 2, 6, 8];
+
+  const isHard = difficulty === EDifficulty.hard;
 
   if (moves >= 3) {
     cell = getFirstWithTwoInARow(computer, cells);
@@ -23,89 +25,85 @@ export default function calcComputerMove(
     }
 
     if (cell === -1) {
-      if (cells[4] === empty && difficulty === EDifficulty.hard) {
+      if (cells[4] === empty && isHard) {
         cell = 4;
       } else {
-        myArr = getFreeCellIndices(cells);
-        cell = myArr[intRandom(0, myArr.length - 1)];
+        candidateCells = getFreeCellIndices(cells);
+        cell = candidateCells[intRandom(0, candidateCells.length - 1)];
       }
     }
 
-    if (
-      moves === 3 &&
-      cells[4] === computer &&
-      player === X &&
-      difficulty === EDifficulty.hard
-    ) {
+    if (moves === 3 && cells[4] === computer && player === X && isHard) {
       if (cells[7] === player && (cells[0] === player || cells[2] === player)) {
-        myArr = [6, 8];
-        cell = myArr[intRandom(0, 1)];
-      } else if (
-        cells[5] === player &&
-        (cells[0] === player || cells[6] === player)
-      ) {
-        myArr = [2, 8];
-        cell = myArr[intRandom(0, 1)];
-      } else if (
-        cells[3] === player &&
-        (cells[2] === player || cells[8] === player)
-      ) {
-        myArr = [0, 6];
-        cell = myArr[intRandom(0, 1)];
-      } else if (
-        cells[1] === player &&
-        (cells[6] === player || cells[8] === player)
-      ) {
-        myArr = [0, 2];
-        cell = myArr[intRandom(0, 1)];
+        candidateCells = [6, 8];
+        return candidateCells[intRandom(0, 1)];
       }
-    } else if (
-      moves === 3 &&
-      cells[4] === player &&
-      player === X &&
-      difficulty === EDifficulty.hard
-    ) {
+
+      if (cells[5] === player && (cells[0] === player || cells[6] === player)) {
+        candidateCells = [2, 8];
+        return candidateCells[intRandom(0, 1)];
+      }
+
+      if (cells[3] === player && (cells[2] === player || cells[8] === player)) {
+        candidateCells = [0, 6];
+        return candidateCells[intRandom(0, 1)];
+      }
+
+      if (cells[1] === player && (cells[6] === player || cells[8] === player)) {
+        candidateCells = [0, 2];
+        return candidateCells[intRandom(0, 1)];
+      }
+    }
+
+    if (moves === 3 && cells[4] === player && player === X && isHard) {
       if (cells[2] === player && cells[6] === computer) {
-        cell = 8;
-      } else if (cells[0] === player && cells[8] === computer) {
-        cell = 6;
-      } else if (cells[8] === player && cells[0] === computer) {
-        cell = 2;
-      } else if (cells[6] === player && cells[2] === computer) {
-        cell = 0;
+        return 8;
+      }
+
+      if (cells[0] === player && cells[8] === computer) {
+        return 6;
+      }
+
+      if (cells[8] === player && cells[0] === computer) {
+        return 2;
+      }
+
+      if (cells[6] === player && cells[2] === computer) {
+        return 0;
       }
     }
-  } else if (
-    moves === 1 &&
-    cells[4] === player &&
-    difficulty === EDifficulty.hard
-  ) {
-    cell = corners[intRandom(0, 3)];
-  } else if (
-    moves === 2 &&
-    cells[4] === player &&
-    computer === X &&
-    difficulty === EDifficulty.hard
-  ) {
-    if (cells[0] === computer) {
-      cell = 8;
-    } else if (cells[2] === computer) {
-      cell = 6;
-    } else if (cells[6] === computer) {
-      cell = 2;
-    } else if (cells[8] === computer) {
-      cell = 0;
-    }
-  } else if (moves === 0 && intRandom(1, 10) < 8) {
-    cell = corners[intRandom(0, 3)];
-  } else {
-    if (cells[4] === empty && difficulty === EDifficulty.hard) {
-      cell = 4;
-    } else {
-      myArr = getFreeCellIndices(cells);
-      cell = myArr[intRandom(0, myArr.length - 1)];
+
+    return cell;
+  }
+
+  if (moves === 1 && cells[4] === player && isHard) {
+    return corners[intRandom(0, 3)];
+  }
+
+  if (moves === 2 && cells[4] === player && computer === X && isHard) {
+    switch (computer) {
+      case cells[0]:
+        return 8;
+      case cells[2]:
+        return 6;
+      case cells[6]:
+        return 2;
+      case cells[8]:
+        return 8;
+      default:
+        return cell;
     }
   }
 
-  return cell;
+  if (moves === 0 && intRandom(1, 10) < 8) {
+    return corners[intRandom(0, 3)];
+  }
+
+  if (cells[4] === empty && isHard) {
+    return 4;
+  }
+
+  candidateCells = getFreeCellIndices(cells);
+
+  return candidateCells[intRandom(0, candidateCells.length - 1)];
 }
