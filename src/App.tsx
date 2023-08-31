@@ -8,7 +8,9 @@ import { empty, O, X } from "./constants/texts";
 import calcComputerMove from "./helpers/calcComputerMove";
 import getAnnounceText from "./helpers/getAnnounceText";
 import getWinner from "./helpers/getWinner";
+import { EDifficulty } from "./models/difficulty.enum";
 import { IScore } from "./models/score";
+
 
 function Grid() {
   const [cells, setCells] = useState(new Array(9).fill(0));
@@ -24,7 +26,7 @@ function Grid() {
   const [playerText, setPlayerText] = useState(X);
   const [computerText, setComputerText] = useState(O);
   const [whoseTurn, setWhoseTurn] = useState(1);
-  const [difficulty, setDifficulty] = useState(1);
+  const [difficulty, setDifficulty] = useState(EDifficulty.hard);
   const [player, setPlayer] = useState(1);
   const [computer, setComputer] = useState(3);
   const [winner, setWinner] = useState(0);
