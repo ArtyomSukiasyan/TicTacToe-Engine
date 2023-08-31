@@ -6,6 +6,7 @@ export default function shuffleArray(array: number[]) {
   while (counter > 0) {
     index = Math.floor(Math.random() * counter);
     counter--;
+
     temp = array[counter];
     array[counter] = array[index];
     array[index] = temp;
