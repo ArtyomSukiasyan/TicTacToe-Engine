@@ -17,11 +17,8 @@ export default function calcComputerMove(
 
   if (moves >= 3) {
     cell = getFirstWithTwoInARow(computer, cells);
-    console.log({ computer });
 
     if (cell === -1) {
-      console.log({ player });
-
       cell = getFirstWithTwoInARow(player, cells);
     }
 
