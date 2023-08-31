@@ -1,11 +1,8 @@
 import { empty } from "../constants/texts";
 import { IScore } from "../models/score";
-import getColumnIndices from "./getColumnIndices";
 import getColumnValues from "./getColumnValues";
-import getDiagIndices from "./getDiagIndices";
 import getDiagValues from "./getDiagValues";
 import getFreeCellIndices from "./getFreeCellIndices";
-import getRowIndices from "./getRowIndices";
 import getRowValues from "./getRowValues";
 
 export default function getWinner(
@@ -14,8 +11,6 @@ export default function getWinner(
   player: string,
   score: IScore
 ) {
-  let winner = empty;
-
   for (let i = 0; i <= 2; i++) {
     const row = getRowValues(i, cells);
 
@@ -23,19 +18,12 @@ export default function getWinner(
       if (row[0] === computer) {
         score = { ...score, computer: score.computer + 1 };
 
-        winner = computer;
-      } else {
-        score = { ...score, player: score.player + 1 };
-        winner = player;
-      }
-      const tmpAr = getRowIndices(i);
-
-      for (let j = 0; j < tmpAr.length; j++) {
-        const str = tmpAr[j].toString();
-        document.getElementById(str)?.classList.add("win-color");
+        return { winner: computer, score };
       }
 
-      return { winner, score };
+      score = { ...score, player: score.player + 1 };
+
+      return { winner: player, score };
     }
   }
 
@@ -46,58 +34,41 @@ export default function getWinner(
       if (col[0] === computer) {
         score = { ...score, computer: score.computer + 1 };
 
-        winner = computer;
-      } else {
-        score = { ...score, player: score.player + 1 };
-        winner = player;
+        return { winner: computer, score };
       }
 
-      const tmpAr = getColumnIndices(i, cells);
+      score = { ...score, player: score.player + 1 };
 
-      for (let j = 0; j < tmpAr.length; j++) {
-        const str = tmpAr[j].toString();
-        document.getElementById(str)?.classList.add("win-color");
-      }
-
-      return { winner, score };
+      return { winner: player, score };
     }
   }
 
   for (let i = 0; i <= 1; i++) {
     const diagonal = getDiagValues(i, cells);
-    if (
-      diagonal[0] &&
-      diagonal[0] === diagonal[1] &&
-      diagonal[0] === diagonal[2]
-    ) {
+
+    const isLeftToRight = diagonal[0] === diagonal[1];
+    const isRightToLeft = diagonal[0] === diagonal[2];
+
+    if (diagonal[0] && isLeftToRight && isRightToLeft) {
       if (diagonal[0] === computer) {
         score = { ...score, computer: score.computer + 1 };
-        winner = computer;
-      } else {
-        score = { ...score, player: score.player + 1 };
 
-        winner = player;
+        return { winner: computer, score };
       }
 
-      const tmpAr = getDiagIndices(i);
+      score = { ...score, player: score.player + 1 };
 
-      for (let j = 0; j < tmpAr.length; j++) {
-        const str = tmpAr[j].toString();
-
-        document.getElementById(str)?.classList.add("win-color");
-      }
-
-      return { winner, score };
+      return { winner: player, score };
     }
   }
 
-  const myArr = getFreeCellIndices(cells);
-  if (myArr.length === 0) {
-    winner = empty;
+  const empties = getFreeCellIndices(cells);
+
+  if (empties.length === 0) {
     score = { ...score, draws: score.draws + 1 };
 
-    return { winner, score };
+    return { winner: empty, score };
   }
 
-  return { winner, score };
+  return { winner: empty, score };
 }
