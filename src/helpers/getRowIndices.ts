@@ -3,8 +3,10 @@ export default function getRowIndices(index: number) {
     return [];
   }
 
-  const row = [];
   index = index * 3;
+
+  const row = [];
+
   row.push(index);
   row.push(index + 1);
   row.push(index + 2);
