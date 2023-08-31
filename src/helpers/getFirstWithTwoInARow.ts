@@ -11,7 +11,7 @@ import shuffleArray from "./shuffleArray";
 import sumArray from "./sumArray";
 
 export default function getFirstWithTwoInARow(agent: string, cells: string[]) {
-  let sum = agent === X ? 2 : 6;
+  const sum = agent === X ? 2 : 6;
   const freeCells = shuffleArray(getFreeCellIndices(cells));
 
   for (let i = 0; i < freeCells.length; i++) {
