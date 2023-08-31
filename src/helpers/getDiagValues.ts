@@ -3,17 +3,19 @@ export default function getDiagValues(arg: number, cells: string[]) {
     return [];
   }
 
-  const newSells = [];
+  const newCells = [];
 
   if (arg === 0) {
-    newSells.push(cells[0]);
-    newSells.push(cells[4]);
-    newSells.push(cells[8]);
-  } else {
-    newSells.push(cells[2]);
-    newSells.push(cells[4]);
-    newSells.push(cells[6]);
-  }
+    newCells.push(cells[0]);
+    newCells.push(cells[4]);
+    newCells.push(cells[8]);
 
-  return newSells;
+    return newCells;
+  }
+  
+  newCells.push(cells[2]);
+  newCells.push(cells[4]);
+  newCells.push(cells[6]);
+
+  return newCells;
 }
