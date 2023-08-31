@@ -2,6 +2,7 @@ export default function getColumnIndices(index: number, cells: string[]) {
   if (index !== 0 && index !== 1 && index !== 2) {
     return [];
   }
+  
   const column = [];
 
   for (let i = index; i < cells.length; i += 3) {
