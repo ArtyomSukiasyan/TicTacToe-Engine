@@ -28,9 +28,9 @@ function Players() {
 function Points({ score }: { score: IScore }) {
   return (
     <div className="score-container">
-      {Object.values(score).map((el, idx) => (
-        <span key={idx}>{el}</span>
-      ))}
+      <span>{score.player}</span>
+      <span>{score.draws}</span>
+      <span>{score.computer}</span>
     </div>
   );
 }
