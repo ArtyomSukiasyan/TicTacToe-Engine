@@ -21,29 +21,27 @@ function Grid() {
   const [announceText, setAnnounceText] = useState(empty);
   const [gameOver, setGameOver] = useState(false);
   const [optionsDlg, setOptionsDlg] = useState(true);
-  const [whoseTurn, setWhoseTurn] = useState(X);
+  const [turn, setTurn] = useState(X);
   const [difficulty, setDifficulty] = useState(EDifficulty.hard);
   const [player, setPlayer] = useState(X);
   const [computer, setComputer] = useState(O);
-  const [winner, setWinner] = useState(empty);
   const [moves, setMoves] = useState(1);
 
   const restart = () => {
     setCells(new Array(9).fill(empty));
     setGameOver(false);
     setOptionsDlg(true);
-    setWhoseTurn(X);
+    setTurn(X);
     setDifficulty(EDifficulty.hard);
     setPlayer(X);
     setComputer(O);
-    setWinner(empty);
     setMoves(1);
   };
 
   const cellClicked = (id: string, prevCells: string[]) => {
     const cell = parseInt(id[id.length - 1]);
 
-    if (prevCells[cell] || whoseTurn !== player || gameOver) {
+    if (prevCells[cell] || turn !== player || gameOver) {
       return;
     }
 
@@ -55,21 +53,18 @@ function Grid() {
 
     if (moves >= 5) {
       const winner = checkWin(newCells);
-      setWinner(winner);
+
+      if (winner) {
+        return;
+      }
     }
 
-    if (winner === empty) {
-      setWhoseTurn(computer);
+    setTurn(computer);
 
-      makeComputerMove(newCells);
-    }
+    makeComputerMove(newCells);
   };
 
   const makeComputerMove = (prevCells: string[]) => {
-    if (gameOver) {
-      return;
-    }
-
     const cell = calcComputerMove(
       prevCells,
       moves,
@@ -85,12 +80,11 @@ function Grid() {
     setCells(newCells);
 
     if (moves >= 5) {
-      const winner = checkWin(newCells);
-      setWinner(winner);
+      checkWin(newCells);
     }
 
-    if (winner === empty && !gameOver) {
-      setWhoseTurn(player);
+    if (!gameOver) {
+      setTurn(player);
     }
   };
 
@@ -104,6 +98,8 @@ function Grid() {
 
     if (newWinner === player || newWinner === computer || moves === 9) {
       endGame(newWinner);
+
+      setGameOver(true);
       setScore(newScore);
     }
 
@@ -120,19 +116,18 @@ function Grid() {
 
   const makePlayerAsX = () => {
     setPlayer(X);
-    setWhoseTurn(X);
+    setTurn(X);
     setComputer(X);
   };
 
   const makePlayerAsO = () => {
     setPlayer(O);
-    setWhoseTurn(X);
+    setTurn(X);
     setComputer(X);
   };
 
   const endGame = (who: string) => {
     setGameOver(true);
-
     const text = getAnnounceText(who, player, computer);
 
     setAnnounceText(text);
