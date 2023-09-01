@@ -28,6 +28,18 @@ function Grid() {
   const [winner, setWinner] = useState(empty);
   const [moves, setMoves] = useState(1);
 
+  const restart = () => {
+    setCells(new Array(9).fill(empty));
+    setGameOver(false);
+    setOptionsDlg(true);
+    setWhoseTurn(X);
+    setDifficulty(EDifficulty.hard);
+    setPlayer(X);
+    setComputer(O);
+    setWinner(empty);
+    setMoves(1);
+  };
+
   const cellClicked = (id: string, prevCells: string[]) => {
     const cell = parseInt(id[id.length - 1]);
 
@@ -125,7 +137,10 @@ function Grid() {
 
     setAnnounceText(text);
 
-    setTimeout(() => setAnnounceText(empty), 1500);
+    setTimeout(() => {
+      setAnnounceText(empty);
+      restart();
+    }, 1500);
   };
 
   return (
