@@ -32,9 +32,6 @@ function Grid() {
     setGameOver(false);
     setOptionsDlg(true);
     setTurn(X);
-    setDifficulty(EDifficulty.hard);
-    setPlayer(X);
-    setComputer(O);
     setMoves(1);
   };
 
