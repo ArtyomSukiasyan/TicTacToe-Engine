@@ -114,7 +114,7 @@ function Grid() {
   const makePlayerAsX = () => {
     setPlayer(X);
     setTurn(X);
-    setComputer(X);
+    setComputer(O);
   };
 
   const makePlayerAsO = () => {
