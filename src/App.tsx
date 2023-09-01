@@ -48,8 +48,8 @@ function Grid() {
     newCells[cell] = player;
     setCells(newCells);
 
-    if (moves >= 5) {
-      const winner = checkWin(newCells);
+    if (moves >= 4) {
+      const winner = checkWin(newCells, moves);
 
       if (winner) {
         return;
@@ -76,8 +76,8 @@ function Grid() {
     newCells[cell] = computer;
     setCells(newCells);
 
-    if (moves >= 5) {
-      checkWin(newCells);
+    if (moves >= 4) {
+      checkWin(newCells, moves + 1);
     }
 
     if (!gameOver) {
@@ -85,7 +85,7 @@ function Grid() {
     }
   };
 
-  const checkWin = (prevCells: string[]) => {
+  const checkWin = (prevCells: string[], prevMoves: number) => {
     const { winner: newWinner, score: newScore } = getWinner(
       prevCells,
       computer,
@@ -93,7 +93,7 @@ function Grid() {
       score
     );
 
-    if (newWinner === player || newWinner === computer || moves === 9) {
+    if (newWinner === player || newWinner === computer || prevMoves === 9) {
       endGame(newWinner);
 
       setGameOver(true);
