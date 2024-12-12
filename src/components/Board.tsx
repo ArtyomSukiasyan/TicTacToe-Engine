@@ -15,7 +15,7 @@ export default function Board({ cells, cellClicked }: IBoard) {
             onClick={(event: any) => cellClicked(event.target.id, cells)}
             className="fixed"
           >
-            {el}
+          <span className="element">{el}</span>
           </div>
         ))}
       </div>
