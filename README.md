@@ -6,7 +6,7 @@ Based on [Tic Tac Toe game](https://github.com/ArtyomSukiasyan/TicTacToe)
 - git clone https://github.com/ArtyomSukiasyan/TicTacToe-Engine.git
 - cd TicTacToe-Engine
 - npm i
-- npm start
+- npm run dev
 
 Tech Stack: React, CSS.
-Application by default uses PORT: 3000
+Application by default uses PORT: 5173
