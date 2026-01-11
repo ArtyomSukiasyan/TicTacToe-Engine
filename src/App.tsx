@@ -132,7 +132,7 @@ function Grid() {
     setTimeout(() => {
       setAnnounceText(empty);
       restart();
-    }, 1500);
+    }, 700);
   };
 
   return (
