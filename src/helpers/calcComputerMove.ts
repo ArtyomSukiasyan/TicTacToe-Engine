@@ -24,6 +24,19 @@ export default function calcComputerMove(
       cell = getFirstWithTwoInARow(player, cells);
     }
 
+    if (moves === 3 && cells[4] === computer && isHard) {
+      const edges = [1, 3, 5, 7];
+      const freeEdges = edges.filter(idx => cells[idx] === empty);
+      
+      if ((cells[0] === player && cells[8] === player) || 
+          (cells[2] === player && cells[6] === player)) {
+
+            if (freeEdges.length > 0) {
+          return freeEdges[intRandom(0, freeEdges.length - 1)];
+        }
+      }
+    }
+
     if (cell === -1) {
       if (cells[4] === empty && isHard) {
         cell = 4;
